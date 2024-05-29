@@ -40,11 +40,6 @@ Chương trình tạo API để lấy dữ liệu từ các cubes.
 
 1. **Mô tả:**
    - Chứa các đoạn mã Python để tự động tạo các lệnh SQL cần thiết cho việc xây dựng và cập nhật các cubes.
-2. **Cách sử dụng:**
-   - Chạy script để tạo các lệnh SQL:
-     ```bash
-     python gen_script_sql.py
-     ```
    - Các lệnh SQL sẽ được tạo ra và có thể được sử dụng để cấu hình cơ sở dữ liệu OLAP.
 
 ### be_dwh

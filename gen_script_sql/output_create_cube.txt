@@ -1,0 +1,3024 @@
+
+            SELECT dd.year,dd.month,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,do.status;
+            go     
+            
+
+            SELECT dd.year,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dd.day,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_day_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dd.day,dc.customer_id;
+            go     
+            
+
+            SELECT dd.month, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month;
+            go     
+            
+
+            SELECT dd.quarter,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.day,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_day_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.day,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.week,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dd.day,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_day_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.day,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.week,dd.day,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_day_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dd.day,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dp.painting_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dc.customer_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.date_id,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_date_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.date_id,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.year,dd.week,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.week,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dd.day,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_day_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dd.day,dp.painting_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dd.day, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_day
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dd.day;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dd.day,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_day_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dd.day,dc.customer_id;
+            go     
+            
+
+            SELECT dd.week,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dd.day,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_day_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dd.day,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,do.status;
+            go     
+            
+
+            SELECT dd.week,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,do.orders_id;
+            go     
+            
+
+            SELECT dd.week,dd.day,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_day_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dd.day,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by do.orders_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.day,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_day_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.day,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.date_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_date_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.date_id,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dd.day,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_day_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.day,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dp.painting_id;
+            go     
+            
+
+            SELECT dd.week,dd.day,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_day_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dd.day,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.month,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.month,dd.day,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_day_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dd.day,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.day,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_day_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.day,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.year,dd.week,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.month,dd.day,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_day_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dd.day,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.month,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.day,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_day_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.day,do.orders_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.week,dd.day,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_day_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dd.day,dp.painting_id;
+            go     
+            
+
+            SELECT dd.week,dd.day,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_day_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dd.day,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by do.status;
+            go     
+            
+
+            SELECT dd.year,dd.month,dd.day,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_day_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dd.day,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.year,dd.month,dd.day,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_day_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dd.day,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.day,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_day_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.day,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year;
+            go     
+            
+
+            SELECT dd.month,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,do.orders_id;
+            go     
+            
+
+            SELECT dd.date_id,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_date_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.date_id,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.month,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,do.status;
+            go     
+            
+
+            SELECT dd.month,dd.day,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_day_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dd.day,dc.customer_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.day,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_day_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.day,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.day,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_day_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.day,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.month,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.month,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.date_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_date_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.date_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.day,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_day_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.day,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.month,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.week, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week;
+            go     
+            
+
+            SELECT dd.quarter,dd.day,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_day_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.day,do.status;
+            go     
+            
+
+            SELECT dd.week,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.day,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_day_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.day,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dd.day,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_day_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dd.day,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.month,dd.day,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_day_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dd.day,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.month,dd.day,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_day_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dd.day,dp.painting_id;
+            go     
+            
+
+            SELECT dd.month,dd.day,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_day_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dd.day,do.orders_id;
+            go     
+            
+
+            SELECT dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.day,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_day_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.day,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.month,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.day,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_day_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.day,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.week,dd.day,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_day_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dd.day,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.month,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.month,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dp.painting_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month;
+            go     
+            
+
+            SELECT dd.year,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.quarter,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.week,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dp.painting_id;
+            go     
+            
+
+            SELECT dd.year,dd.week,dd.day,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_day_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dd.day,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.month, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.month,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.month,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dd.day,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_day_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dd.day,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.week,dd.day,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_day_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dd.day,dc.customer_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.day,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_day_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.day,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.month,dd.day,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_day_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dd.day,dc.customer_id;
+            go     
+            
+
+            SELECT dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dc.customer_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dd.day,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_day_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dd.day,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.day,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_day_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.day,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.week,dd.day,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_day_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dd.day,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.month,dd.day,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_day_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dd.day,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.month,dd.day,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_day_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dd.day,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dd.day,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_day_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.day,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.month, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.week,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.week,dd.day,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_day_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dd.day,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.date_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_date
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.date_id;
+            go     
+            
+
+            SELECT dd.year,dd.week, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week;
+            go     
+            
+
+            SELECT dd.quarter,dd.day,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_day_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.day,dp.painting_id;
+            go     
+            
+
+            SELECT dd.quarter,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dd.day,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_day_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dd.day,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.month,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dc.customer_id;
+            go     
+            
+
+            SELECT dd.year,dd.month,dd.day,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_day_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dd.day,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dd.day,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_day_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dd.day,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.day,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_day_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.day,dc.customer_id;
+            go     
+            
+
+            SELECT dd.quarter,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.day,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_day_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.day,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.month,dd.day,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_day_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dd.day,dp.painting_id;
+            go     
+            
+
+            SELECT dd.day,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_day_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.day,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.month,dd.day,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_day_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dd.day,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dd.day,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_day_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dd.day,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.month,dd.day,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_day_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dd.day,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.quarter,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.day,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_day_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.day,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.day,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_day_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.day,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dd.day,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_day_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dd.day,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.week,dd.day,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_day_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dd.day,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.week,dd.day,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_day_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dd.day,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dd.day,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_day_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dd.day,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.day,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_day_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.day,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dd.day,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_day_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dd.day,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.week,dd.day,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_day_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dd.day,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.day,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_day_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.day,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.quarter,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.week,dd.day,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_day_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dd.day,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dc.customer_id;
+            go     
+            
+
+            SELECT dd.month,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dd.day,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_day_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dd.day,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.day,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_day_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.day,dc.customer_id;
+            go     
+            
+
+            SELECT dd.quarter, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter;
+            go     
+            
+
+            SELECT dd.month,dd.day,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_day_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dd.day,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.month,dd.day,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_day_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dd.day,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.week,dd.day,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_day_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dd.day,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dp.painting_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.day,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_day_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.day,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.date_id,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_date_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.date_id,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.day,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_day_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.day,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.week,dd.day,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_day_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dd.day,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.week,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dc.customer_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.month,dd.day,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_day_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dd.day,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.day, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_day
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.day;
+            go     
+            
+
+            SELECT dd.year,dd.week,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.year,dd.day,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_day_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.day,do.orders_id;
+            go     
+            
+
+            SELECT dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.month,dd.day,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_day_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dd.day,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.month,dd.day,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_day_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dd.day,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dc.customer_id;
+            go     
+            
+
+            SELECT dd.week,dd.day, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_day
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dd.day;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.month,dd.day, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_day
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dd.day;
+            go     
+            
+
+            SELECT dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dp.painting_id;
+            go     
+            
+
+            SELECT dd.week,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dp.painting_id;
+            go     
+            
+
+            SELECT dd.year,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.year,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.week,dd.day,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_day_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dd.day,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.week,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.day,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_day_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.day,dp.painting_id;
+            go     
+            
+
+            SELECT dd.year,dd.month,dd.day,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_day_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dd.day,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.quarter,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dd.day,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_day_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dd.day,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.week,dd.day, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_day
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dd.day;
+            go     
+            
+
+            SELECT dd.week,dd.day,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_day_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dd.day,dp.painting_id;
+            go     
+            
+
+            SELECT dd.date_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_date_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.date_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.month,dd.day, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_day
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dd.day;
+            go     
+            
+
+            SELECT dd.year,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,do.orders_id;
+            go     
+            
+
+            SELECT dd.week,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.day,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_day_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.day,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,do.status;
+            go     
+            
+
+            SELECT dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.date_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_date_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.date_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.month,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.day,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_day_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.day,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.week,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.date_id,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_date_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.date_id,dc.customer_id;
+            go     
+            
+
+            SELECT dd.year,dd.day, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_day
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.day;
+            go     
+            
+
+            SELECT dd.month,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.day,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_day_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.day,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.week,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dp.painting_id;
+            go     
+            
+
+            SELECT dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.month,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dp.painting_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dd.day,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_day_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dd.day,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.day,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_day_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.day,dp.painting_id;
+            go     
+            
+
+            SELECT dd.quarter,dd.day,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_day_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.day,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.month,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.week,dd.day,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_day_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dd.day,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dd.day,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_day_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dd.day,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT  sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            ;
+            go     
+            
+
+            SELECT dd.quarter,dd.day, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_day
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.day;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dd.day,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_day_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dd.day,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.day,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_day_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.day,do.status;
+            go     
+            
+
+            SELECT dd.date_id,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_date_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.date_id,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.week,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dd.day,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_day_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dd.day,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.week,dd.day,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_day_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dd.day,dc.customer_id;
+            go     
+            
+
+            SELECT dd.week,dd.day,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_day_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dd.day,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dd.day, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_day
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dd.day;
+            go     
+            
+
+            SELECT dd.year,dd.week,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dc.customer_id;
+            go     
+            
+
+            SELECT dd.week,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_week_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.week,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.week,dd.day,dc.customer_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_day_customer_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dd.day,dc.customer_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.month,dd.day,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_day_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dd.day,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.month,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dc.customer_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.day,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_day_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.day,do.orders_id;
+            go     
+            
+
+            SELECT dd.day,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_day_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.day,dc.customer_id;
+            go     
+            
+
+            SELECT dd.month,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_month_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.month,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.day,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_day_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.day,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.quarter,dd.month,dd.day,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_quarter_month_day_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.quarter,dd.month,dd.day,do.status;
+            go     
+            
+
+            SELECT dd.year,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.day,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_day_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.day,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dd.day,dc.customer_id,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_day_customer_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dd.day,dc.customer_id,dp.painting_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.day,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_day_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.day,dc.customer_id;
+            go     
+            
+
+            SELECT dd.date_id,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_date_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.date_id,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.week,dp.painting_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_painting_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dp.painting_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dp.painting_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dc.customer_id;
+            go     
+            
+
+            SELECT dd.year,dc.customer_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_customer
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dc.customer_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.day, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_day
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.day;
+            go     
+            
+
+            SELECT dd.date_id,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_date_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.date_id,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.day,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_day_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.day,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.day,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_day_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.day,dp.painting_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dc.customer_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_customer_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dc.customer_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.month,dc.customer_id,dp.painting_id,do.status, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_month_customer_painting_status
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.month,dc.customer_id,dp.painting_id,do.status;
+            go     
+            
+
+            SELECT dd.year,dd.week,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.week,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_week_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.week,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.day,dc.customer_id,do.orders_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_day_customer_orders
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.day,dc.customer_id,do.orders_id;
+            go     
+            
+
+            SELECT dd.year,dd.quarter,dd.month,dd.day,dp.painting_id, sum(fs.total_price) as total_price
+            into [cubes_htttql].[dbo].cube_year_quarter_month_day_painting
+            FROM [dwh_htttql].[dbo].[fact_sales] fs
+            join dim_date dd on dd.date_id = fs.date_id
+            join dim_customer dc on dc.customer_id = fs.customer_id
+            join dim_painting dp on dp.painting_id = fs.painting_id
+            join dim_orders do on do.orders_id = fs.orders_id
+            where do.status_flag = 1 and dc.status_flag = 1 and dp.status_flag = 1
+            group by dd.year,dd.quarter,dd.month,dd.day,dp.painting_id;
+            go     
+            
